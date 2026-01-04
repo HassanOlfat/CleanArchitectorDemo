@@ -1,9 +1,11 @@
 @CleanArchDemo.Presentation_HostAddress = https://localhost:7215
 
+### تست ساده
 GET {{CleanArchDemo.Presentation_HostAddress}}/api/test
 
+### گرفتن مشتری محصولات
+GET {{CleanArchDemo.Presentation_HostAddress}}/api/customer
 
-###
 ### ایجاد مشتری جدید
 POST {{CleanArchDemo.Presentation_HostAddress}}/api/customer
 Content-Type: application/json
@@ -16,9 +18,23 @@ Content-Type: application/json
   "postalCode": "11000"
 }
 
+
 ### گرفتن لیست محصولات
-###GET {{CleanArchDemo.Presentation_HostAddress}}/api/product
-GET https://localhost:7215/api/Product
+GET {{CleanArchDemo.Presentation_HostAddress}}/api/product
+
+### ثبت محصولات جدید
+POST {{CleanArchDemo.Presentation_HostAddress}}/api/product
+Content-Type: application/json
+
+{
+  "name": "Oil",
+  "price": {
+    "amount": 1000,
+    "currency": "ريال"
+  }
+}
+
+
 ### ثبت سفارش جدید
 POST {{CleanArchDemo.Presentation_HostAddress}}/api/order
 Content-Type: application/json

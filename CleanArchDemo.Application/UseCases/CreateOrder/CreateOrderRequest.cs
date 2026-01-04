@@ -1,3 +1,11 @@
-﻿namespace CleanArchDemo.Application.UseCases.CreateOrder;
+﻿using CleanArchDemo.Application.Dtos;
 
-public record CreateOrderRequest(int CustomerId, List<(int ProductId, int Quantity)> Items);
+namespace CleanArchDemo.Application.UseCases.CreateOrder;
+
+ 
+public class CreateOrderRequest
+{
+    public int CustomerId { get; set; }
+    public List<OrderItemRequest> Items { get; set; } = new();
+
+}

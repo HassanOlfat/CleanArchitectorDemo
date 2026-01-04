@@ -7,6 +7,7 @@ public class InMemoryProductRepository : IProductRepository
 {
     private readonly List<Product> _products = new();
 
+
     public Product GetById(int id) =>
         _products.FirstOrDefault(p => p.Id == id)
         ?? throw new Exception("Product not found");

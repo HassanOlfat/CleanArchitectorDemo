@@ -8,9 +8,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<ICustomerRepository, InMemoryCustomerRepository>();
-        services.AddScoped<IProductRepository, InMemoryProductRepository>();
-        services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
+        services.AddSingleton<ICustomerRepository, InMemoryCustomerRepository>();
+        services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+        services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
 
         return services;
     }

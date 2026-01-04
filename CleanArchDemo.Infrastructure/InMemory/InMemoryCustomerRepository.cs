@@ -7,6 +7,8 @@ public class InMemoryCustomerRepository : ICustomerRepository
 {
     private readonly List<Customer> _customers = new();
 
+    public List<Customer> GetAll() => _customers;
+
     public Customer GetById(int id) =>
         _customers.FirstOrDefault(c => c.Id == id)
         ?? throw new Exception("Customer not found");
