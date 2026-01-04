@@ -1,0 +1,6 @@
+@CleanArchDemo.Presentation_HostAddress = http://localhost:5269
+
+GET {{CleanArchDemo.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
