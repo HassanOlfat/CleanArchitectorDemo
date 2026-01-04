@@ -5,8 +5,8 @@ namespace CleanArchDemo.Domain.Aggregates;
 
 public class Order
 {
-    public int Id { get; private set; }
-    public Customer Customer { get; private set; }
+    public int Id { get;  set; }
+    public Customer Customer { get; set; }
     private readonly List<OrderItem> _items = new();
 
     public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
