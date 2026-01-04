@@ -5,6 +5,8 @@ namespace CleanArchDemo.Application.Interfaces
     public interface ICustomerRepository
     {
         Customer GetById(int id);
+        void Save(Customer customer);
+
     }
 
 }

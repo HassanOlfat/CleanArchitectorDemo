@@ -21,7 +21,7 @@ public class CreateOrderUseCase
     public CreateOrderResponse Handle(CreateOrderRequest request)
     {
         var customer = _customerRepo.GetById(request.CustomerId);
-        var order = new Order(0, customer);
+        var order = new Domain.Aggregates.Order(0, customer);
 
         foreach (var item in request.Items)
         {
