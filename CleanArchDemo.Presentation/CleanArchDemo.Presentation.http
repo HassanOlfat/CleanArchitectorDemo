@@ -1,6 +1,35 @@
-@CleanArchDemo.Presentation_HostAddress = http://localhost:5269
+@CleanArchDemo.Presentation_HostAddress = https://localhost:7215
 
-GET {{CleanArchDemo.Presentation_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{CleanArchDemo.Presentation_HostAddress}}/api/test
+
 
 ###
+### ایجاد مشتری جدید
+POST {{CleanArchDemo.Presentation_HostAddress}}/api/customer
+Content-Type: application/json
+
+{
+  "name": "Hassan",
+  "email": "hassan@example.com",
+  "street": "Main St",
+  "city": "Belgrade",
+  "postalCode": "11000"
+}
+
+### گرفتن لیست محصولات
+###GET {{CleanArchDemo.Presentation_HostAddress}}/api/product
+GET https://localhost:7215/api/Product
+### ثبت سفارش جدید
+POST {{CleanArchDemo.Presentation_HostAddress}}/api/order
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 2, "quantity": 1 }
+  ]
+}
+
+### گرفتن سفارش با شناسه
+GET {{CleanArchDemo.Presentation_HostAddress}}/api/order/1
