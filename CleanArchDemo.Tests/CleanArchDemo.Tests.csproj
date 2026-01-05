@@ -19,10 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Application\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Integration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchDemo.Application\CleanArchDemo.Application.csproj" />
+    <ProjectReference Include="..\CleanArchDemo.Domain\CleanArchDemo.Domain.csproj" />
+    <ProjectReference Include="..\CleanArchDemo.Infrastructure\CleanArchDemo.Infrastructure.csproj" />
+    <ProjectReference Include="..\CleanArchDemo.Presentation\CleanArchDemo.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
