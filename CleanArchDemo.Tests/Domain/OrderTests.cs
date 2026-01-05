@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CleanArchDemo.Domain.Entities;
+using CleanArchDemo.Domain.ValueObjects;
 
-namespace CleanArchDemo.Tests.Domain
-{
-    using CleanArchDemo.Domain.Entities;
-    using CleanArchDemo.Domain.ValueObjects;
-    using System.Collections.Generic;
-    using Xunit;
+namespace CleanArchDemo.Tests.Domain;
+
 
     public class OrderTests
     {
         [Fact]
         public void GetTotal_Should_Return_Zero_When_No_Items()
         {
-            var order = new Order(); 
+            var order = new Order();
 
             var total = order.GetTotal();
 
@@ -75,11 +70,11 @@ namespace CleanArchDemo.Tests.Domain
 
             var total = order.GetTotal();
 
-            Assert.Equal(21752000, total.Amount); 
+            Assert.Equal(21752000, total.Amount);
             Assert.Equal("IRR", total.Currency);
         }
 
 
 
     }
-}
+
