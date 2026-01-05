@@ -10,11 +10,29 @@ public class Order
 
     public Money GetTotal()
     {
-        if (!Items.Any()) return new Money(0, "USD");
+        if (!Items.Any()) return new Money(0, "IRR");
 
-        string currency = Items.First().Product.Price.Currency;
-        decimal total = Items.Sum(i => i.Product.Price.Amount * i.Quantity.Value);
+        decimal total = 0;
 
-        return new Money(total, currency);
+        foreach (var item in Items)
+        {
+            var price = item.Product.Price;
+
+            if (price.Currency == "USD")
+            {
+                total += price.Amount * item.Quantity.Value * 14500;
+
+            }
+            else if (price.Currency == "IRR")
+            {
+                total += price.Amount * item.Quantity.Value;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unsupported currency: {price.Currency}");
+            }
+        }
+
+        return new Money(total, "IRR");
     }
 }

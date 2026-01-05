@@ -10,5 +10,6 @@ public record Money(decimal Amount, string Currency)
         return new Money(Amount + other.Amount, Currency);
     }
 
+
     public override string ToString() => $"{Amount} {Currency}";
 }
