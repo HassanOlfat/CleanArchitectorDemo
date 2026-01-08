@@ -8,6 +8,7 @@ public class Order
     public Customer Customer { get; set; }
     public List<OrderItem> Items { get; set; } = new();
 
+
     public Money GetTotal()
     {
         if (!Items.Any()) return new Money(0, "IRR");

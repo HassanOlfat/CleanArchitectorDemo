@@ -9,5 +9,6 @@ public class Customer
     public EmailAddress Email { get; set; } = new EmailAddress("default@example.com");
     public Address Address { get; set; } = new Address("Street", "City", "00000");
 
-
+    // Navigation property
+    public List<Order> Orders { get; set; } = new();
 }

@@ -4,9 +4,11 @@ namespace CleanArchDemo.Domain.Entities;
 
 public class OrderItem
 {
+    public int Id { get; set; }
     public Product Product { get; }
     public Quantity Quantity { get; }
 
+    public Order Order { get; }
     public OrderItem(Product product, Quantity quantity)
     {
         Product = product ?? throw new ArgumentNullException(nameof(product));
