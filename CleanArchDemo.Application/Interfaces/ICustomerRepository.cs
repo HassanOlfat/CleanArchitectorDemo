@@ -4,9 +4,14 @@ namespace CleanArchDemo.Application.Interfaces
 {
     public interface ICustomerRepository
     {
-        Customer GetById(int id);
+        Task<Customer?> GetByIdAsync(int id);
+        Task<List<Customer>> GetAllAsync();
+        Task AddAsync(Customer customer);
+        Task UpdateAsync(Customer customer);
+        Task DeleteAsync(int id);
+
         List<Customer> GetAll();
-        void Save(Customer customer);
+
 
     }
 

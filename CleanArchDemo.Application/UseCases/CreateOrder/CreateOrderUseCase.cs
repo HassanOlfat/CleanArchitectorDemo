@@ -2,6 +2,7 @@
 using CleanArchDemo.Domain.Aggregates;
 using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Application.UseCases.CreateOrder;
 
@@ -18,9 +19,9 @@ public class CreateOrderUseCase
         _orderRepo = orderRepo;
     }
 
-    public CreateOrderResponse Handle(CreateOrderRequest request)
+    public async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
     {
-        var customer = _customerRepo.GetById(request.CustomerId);
+        var customer =await _customerRepo.GetByIdAsync(request.CustomerId);
         var order = new Domain.Aggregates.Order(0, customer);
 
         foreach (var item in request.Items)

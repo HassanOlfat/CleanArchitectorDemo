@@ -1,19 +1,21 @@
 ﻿using CleanArchDemo.Application.UseCases.CreateOrder;
 using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
-using CleanArchDemo.Infrastructure.InMemory;
+using CleanArchDemo.Infrastructure.Persistence;
+using CleanArchDemo.Infrastructure.Persistence.Repositories;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Tests.Application;
 
 public class CreateOrderUseCaseTests
 {
     [Fact]
-    public void Should_Create_Order_With_Valid_Customer_And_Products()
+    public async Task Should_Create_Order_With_Valid_Customer_And_Products()
     {
         // Arrange
-        var customerRepo = new InMemoryCustomerRepository();
-        var productRepo = new InMemoryProductRepository();
-        var orderRepo = new InMemoryOrderRepository();
+    var customerRepo = new CustomerRepository();
+        var productRepo = new ProductRepository();
+        var orderRepo = new OrderRepository();
 
         var customer = new Customer() 
         {
@@ -21,7 +23,7 @@ public class CreateOrderUseCaseTests
             Email = new EmailAddress("hassan.olfat@outlook.com"),
             Address = new Address("Street", "City", "00000")
         }; 
-        customerRepo.Save(customer);
+      await  customerRepo.AddAsync(customer);
 
         var product = new Product { Id = 1, Name = "Oil", Price = new Money(1000, "IRR") };
         productRepo.Save(product);

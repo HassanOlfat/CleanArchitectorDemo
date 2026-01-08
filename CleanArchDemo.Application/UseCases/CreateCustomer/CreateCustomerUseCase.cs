@@ -2,6 +2,7 @@
 using CleanArchDemo.Domain.Aggregates;
 using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Application.UseCases.CreateCustomer;
 
@@ -14,7 +15,7 @@ public class CreateCustomerUseCase
         _customerRepo = customerRepo;
     }
 
-    public CreateCustomerResponse Handle(CreateCustomerRequest request)
+    public async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
     {
         var customer = new Customer
         {
@@ -23,7 +24,7 @@ public class CreateCustomerUseCase
             Address = new Address(request.Street, request.City, request.PostalCode)
         };
 
-        _customerRepo.Save(customer);
+       await _customerRepo.AddAsync(customer);
 
         return new CreateCustomerResponse(customer.Id);
     }

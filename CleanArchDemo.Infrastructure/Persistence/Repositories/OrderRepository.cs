@@ -1,9 +1,9 @@
 ﻿using CleanArchDemo.Domain.Aggregates;
 using CleanArchDemo.Application.Interfaces;
 
-namespace CleanArchDemo.Infrastructure.InMemory;
+namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
 
-public class InMemoryOrderRepository : IOrderRepository
+public class OrderRepository : IOrderRepository
 {
     private readonly List<Order> _orders = new();
 

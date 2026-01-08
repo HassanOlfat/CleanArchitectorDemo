@@ -1,9 +1,9 @@
 ﻿using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Application.Interfaces;
 
-namespace CleanArchDemo.Infrastructure.InMemory;
+namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
 
-public class InMemoryProductRepository : IProductRepository
+public class ProductRepository : IProductRepository
 {
     private readonly List<Product> _products = new();
 
