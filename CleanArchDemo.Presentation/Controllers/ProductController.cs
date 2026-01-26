@@ -2,6 +2,7 @@
 using CleanArchDemo.Application.UseCases.CreateProduct;
 using CleanArchDemo.Application.UseCases.GetProducts;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Presentation.Controllers
 {
@@ -22,9 +23,9 @@ namespace CleanArchDemo.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateProductRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
         {
-            var response = _createProducts.Handle(request);
+            var response =await _createProducts.Handle(request);
             return Ok(response);
         }
 

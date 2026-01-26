@@ -1,4 +1,5 @@
 ﻿using CleanArchDemo.Application.Interfaces;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Application.UseCases.GetOrderById;
 
@@ -11,9 +12,9 @@ public class GetOrderByIdUseCase
         _orderRepo = orderRepo;
     }
 
-    public GetOrderByIdResponse Handle(GetOrderByIdRequest request)
+    public async Task<GetOrderByIdResponse> Handle(GetOrderByIdRequest request)
     {
-        var order = _orderRepo.GetById(request.OrderId);
+        var order =await _orderRepo.GetByIdAsync(request.OrderId);
         var total = order.GetTotal();
 
         return new GetOrderByIdResponse(order.Id, order.Customer.Name, total.Amount, total.Currency);

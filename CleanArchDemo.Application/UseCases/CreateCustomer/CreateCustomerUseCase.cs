@@ -20,8 +20,14 @@ public class CreateCustomerUseCase
         var customer = new Customer
         {
             Name = request.Name,
-            Email = new EmailAddress(request.Email),
-            Address = new Address(request.Street, request.City, request.PostalCode)
+            Email = new EmailAddress()
+            {
+                Value = request.Email,
+            },
+            Address = new Address()
+            {
+               Street= request.Street,City= request.City,PostalCode= request.PostalCode
+            }
         };
 
        await _customerRepo.AddAsync(customer);

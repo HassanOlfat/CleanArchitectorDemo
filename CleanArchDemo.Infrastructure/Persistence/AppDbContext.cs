@@ -23,10 +23,22 @@ namespace CleanArchDemo.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Customer>()
+        .OwnsOne(c => c.Address);
+            modelBuilder.Entity<Customer>()
+        .OwnsOne(c => c.Email);
+
+            modelBuilder.Entity<Product>()
+        .OwnsOne(c => c.Price);
+
+            modelBuilder.Entity<OrderItem>()
+        .OwnsOne(c => c.Quantity);
+
             base.OnModelCreating(modelBuilder);
+
         }
     }
 
 }
-    
+
 

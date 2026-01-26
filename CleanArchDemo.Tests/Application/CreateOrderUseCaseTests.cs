@@ -3,6 +3,7 @@ using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
 using CleanArchDemo.Infrastructure.Persistence;
 using CleanArchDemo.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace CleanArchDemo.Tests.Application;
@@ -13,20 +14,30 @@ public class CreateOrderUseCaseTests
     public async Task Should_Create_Order_With_Valid_Customer_And_Products()
     {
         // Arrange
-    var customerRepo = new CustomerRepository();
-        var productRepo = new ProductRepository();
-        var orderRepo = new OrderRepository();
+        var options = new DbContextOptionsBuilder<AppDbContext>()
+           .UseInMemoryDatabase(databaseName: "TestDb")
+           
+           .Options;
+        var context = new AppDbContext(options);
 
-        var customer = new Customer() 
+
+        var customerRepo = new CustomerRepository(context);
+        var productRepo = new ProductRepository(context);
+        var orderRepo = new OrderRepository(context);
+
+        var customer = new Customer()
         {
             Name = "Hassan",
-            Email = new EmailAddress("hassan.olfat@outlook.com"),
-            Address = new Address("Street", "City", "00000")
-        }; 
-      await  customerRepo.AddAsync(customer);
+            Email = new EmailAddress() { Value= "hassan.olfat@outlook.com" },
+            Address = new Address()
+            {
+               Street= "Street",City= "City",PostalCode= "00000"
+            }
+        };
+        await customerRepo.AddAsync(customer);
 
         var product = new Product { Id = 1, Name = "Oil", Price = new Money(1000, "IRR") };
-        productRepo.Save(product);
+        await productRepo.AddAsync(product);
 
         var request = new CreateOrderRequest
         {
@@ -40,7 +51,7 @@ public class CreateOrderUseCaseTests
         var useCase = new CreateOrderUseCase(customerRepo, productRepo, orderRepo);
 
         // Act
-        var response = useCase.Handle(request);
+        var response =await useCase.Handle(request);
 
         // Assert
         Assert.Equal(2000, response.TotalAmount);

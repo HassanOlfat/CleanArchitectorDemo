@@ -1,24 +1,53 @@
-﻿using CleanArchDemo.Domain.Entities;
-using CleanArchDemo.Application.Interfaces;
+﻿using CleanArchDemo.Application.Interfaces;
+using CleanArchDemo.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
 
 public class ProductRepository : IProductRepository
 {
-    private readonly List<Product> _products = new();
+    private readonly AppDbContext _context;
 
-
-    public Product GetById(int id) =>
-        _products.FirstOrDefault(p => p.Id == id)
-        ?? throw new Exception("Product not found");
-
-    public List<Product> GetAll() => _products;
-
-    public void Save(Product product)
+    public ProductRepository(AppDbContext context)
     {
-        if (product.Id == 0)
-            product.Id = _products.Count + 1;
+        _context = context;
+    }
 
-        _products.Add(product);
+    public List<Product> GetAll()
+    {
+        return _context.Products.ToList();
+    }
+
+    public async Task<Product?> GetByIdAsync(int id)
+    {
+        return await _context.Products
+                             .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    public async Task<List<Product>> GetAllAsync()
+    {
+        return await _context.Products.ToListAsync();
+    }
+
+    public async Task AddAsync(Product product)
+    {
+        await _context.Products.AddAsync(product);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Product product)
+    {
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var product = await _context.Products.FindAsync(id);
+        if (product != null)
+        {
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+        }
     }
 }

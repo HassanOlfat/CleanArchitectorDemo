@@ -2,6 +2,7 @@
 using CleanArchDemo.Domain.Aggregates;
 using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
+using System.Threading.Tasks;
 
 namespace CleanArchDemo.Application.UseCases.CreateProduct;
 
@@ -14,7 +15,7 @@ public class CreateProductUseCase
         _productRepo = productRepo;
     }
 
-    public CreateProductResponse Handle(CreateProductRequest request)
+    public async Task<CreateProductResponse> Handle(CreateProductRequest request)
     {
         var product = new Product
         {
@@ -22,7 +23,7 @@ public class CreateProductUseCase
            Price=new Money(request.Price.Amount, request.Price.Currency)
         };
 
-        _productRepo.Save(product);
+       await _productRepo.AddAsync(product);
 
         return new CreateProductResponse(product.Id);
     }

@@ -1,54 +1,55 @@
-﻿using CleanArchDemo.Domain.Aggregates;
-using CleanArchDemo.Application.Interfaces;
+﻿using CleanArchDemo.Application.Interfaces;
+using CleanArchDemo.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
-    private readonly List<Order> _orders = new();
+    private readonly AppDbContext _context;
 
-    public Task<Order?> GetByIdAsync(int id) =>
-        Task.FromResult(_orders.FirstOrDefault(o => o.Id == id));
-
-    public Task<List<Order>> GetAllAsync() =>
-        Task.FromResult(_orders.ToList());
-
-    public Task AddAsync(Order order)
+    public OrderRepository(AppDbContext context)
     {
-        Save(order);
-        return Task.CompletedTask;
+        _context = context;
     }
 
-    public Task UpdateAsync(Order order)
+
+
+    public async Task<Order?> GetByIdAsync(int id)
     {
-        var existing = _orders.FirstOrDefault(o => o.Id == order.Id);
-        if (existing != null)
+        return await _context.Orders
+                             .Include(o => o.Customer)
+                             .Include(o => o.Items)
+                             .FirstOrDefaultAsync(o => o.Id == id);
+    }
+
+    public async Task<List<Order>> GetAllAsync()
+    {
+        return await _context.Orders
+                             .Include(o => o.Customer)
+                             .Include(o => o.Items)
+                             .ToListAsync();
+    }
+
+    public async Task AddAsync(Order order)
+    {
+        await _context.Orders.AddAsync(order);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Order order)
+    {
+        _context.Orders.Update(order);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var order = await _context.Orders.FindAsync(id);
+        if (order != null)
         {
-            _orders.Remove(existing);
-            _orders.Add(order);
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
         }
-        return Task.CompletedTask;
-    }
-
-
-    public Task DeleteAsync(int id)
-    {
-        var existing = _orders.FirstOrDefault(o => o.Id == id);
-        if (existing != null)
-            _orders.Remove(existing);
-
-        return Task.CompletedTask;
-    }
-
-    public Order GetById(int id) =>
-        _orders.FirstOrDefault(o => o.Id == id)
-        ?? throw new Exception("Order not found");
-
-    public void Save(Order order)
-    {
-        if (order.Id == 0)
-            order.Id = _orders.Count + 1;
-
-        _orders.Add(order);
     }
 }

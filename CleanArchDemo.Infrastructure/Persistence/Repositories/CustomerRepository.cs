@@ -15,12 +15,6 @@ namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
         }
 
 
-        public Customer? GetById(int id)
-        {
-            return _context.Customers
-                           .Include(c => c.Orders) 
-                           .FirstOrDefault(c => c.Id == id);
-        }
 
         public List<Customer> GetAll()
         {

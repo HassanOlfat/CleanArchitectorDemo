@@ -3,16 +3,22 @@
 public record Quantity
 {
 
-    public int Value { get; }
+    private int _value;
 
-    public Quantity(int value)
+    public int Value
     {
-        if (value <= 0)
-            throw new ArgumentException("Quantity must be greater than zero");
-
-        Value = value;
+        get => _value;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Quantity must be greater than zero");
+            _value = value;
+        }
     }
 
-    public override string ToString() => Value.ToString();
+
+
+
+    public override string ToString() => _value.ToString();
 }
 

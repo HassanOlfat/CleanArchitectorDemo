@@ -19,7 +19,10 @@ public class Order
 
     public void AddItem(Product product, Quantity quantity)
     {
-        var item = new OrderItem(product, quantity);
+        var item = new OrderItem();
+
+        item.Product = product;
+        item.Quantity = quantity;
         _items.Add(item);
     }
 
@@ -27,9 +30,17 @@ public class Order
     {
         if (!_items.Any()) return new Money(0, "USD");
 
-        string currency = _items.First().Product.Price.Currency;
+        Money price = _items.First().Product.Price;
+        var currency = GetCurrency(price);
         decimal total = _items.Sum(i => i.Product.Price.Amount * i.Quantity.Value);
 
         return new Money(total, currency);
+
+        static string? GetCurrency(Money price)
+        {
+            if (price is null)
+                throw new ArgumentNullException(nameof(price));
+            return price.Currency;
+        }
     }
 }

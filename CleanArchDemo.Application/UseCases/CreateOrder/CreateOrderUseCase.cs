@@ -2,6 +2,7 @@
 using CleanArchDemo.Domain.Aggregates;
 using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CleanArchDemo.Application.UseCases.CreateOrder;
@@ -22,17 +23,27 @@ public class CreateOrderUseCase
     public async Task<CreateOrderResponse> Handle(CreateOrderRequest request)
     {
         var customer =await _customerRepo.GetByIdAsync(request.CustomerId);
-        var order = new Domain.Aggregates.Order(0, customer);
+        var orderAggregate = new Domain.Aggregates.Order(0, customer);
 
         foreach (var item in request.Items)
         {
-            var product = _productRepo.GetById(item.ProductId);
-            order.AddItem(product, new Quantity(item.Quantity));
+            var product =await _productRepo.GetByIdAsync(item.ProductId);
+            orderAggregate.AddItem(product, new Quantity() {Value= item.Quantity });
         }
 
-        _orderRepo.Save(order);
 
-        var total = order.GetTotal();
-        return new CreateOrderResponse(order.Id, total.Amount, total.Currency);
+        var orderEntity = new Domain.Entities.Order
+        {
+            Id = orderAggregate.Id,
+            
+            Customer = orderAggregate.Customer,
+            Items = orderAggregate.Items.Select(i => new OrderItem() { Product= i.Product,Quantity=i.Quantity}).ToList()
+        };
+
+        await _orderRepo.AddAsync(orderEntity);
+
+
+        var total = orderAggregate.GetTotal();
+        return new CreateOrderResponse(orderAggregate.Id, total.Amount, total.Currency);
     }
 }

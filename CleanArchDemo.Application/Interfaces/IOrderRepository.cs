@@ -1,4 +1,4 @@
-﻿using CleanArchDemo.Domain.Aggregates;
+﻿using CleanArchDemo.Domain.Entities;
 
 namespace CleanArchDemo.Application.Interfaces;
 
@@ -10,6 +10,4 @@ public interface IOrderRepository
     Task UpdateAsync(Order order);
     Task DeleteAsync(int id);
 
-    void Save(Order order);
-    Order GetById(int id);
 }

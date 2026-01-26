@@ -4,6 +4,6 @@ namespace CleanArchDemo.Application.UseCases.CreateProduct;
 
 public class CreateProductRequest
 {
-    public string Name { get; set; }
-    public MoneyDto Price { get; set; }
+    public string? Name { get; set; }
+    public required MoneyDto Price { get; set; }
 }

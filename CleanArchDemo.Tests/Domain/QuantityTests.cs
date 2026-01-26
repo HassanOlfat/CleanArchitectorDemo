@@ -1,4 +1,5 @@
 ﻿using CleanArchDemo.Domain.ValueObjects;
+using Newtonsoft.Json.Linq;
 
 namespace CleanArchDemo.Tests.Domain;
 
@@ -11,7 +12,7 @@ public class QuantityTests
     public void Should_Throw_Exception_When_Value_Is_Zero_Or_Negative(int invalidValue)
     {
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => new Quantity(invalidValue));
+        var ex = Assert.Throws<ArgumentException>(() => new Quantity() { Value = invalidValue });
         Assert.Equal("Quantity must be greater than zero", ex.Message);
     }
 
@@ -22,7 +23,7 @@ public class QuantityTests
     [InlineData(10)]
     public void Quantity_Should_Be_Created_With_Valid_Value(int value)
     {
-        var q = new Quantity(value);
+        var q = new Quantity() { Value = value };
 
         Assert.Equal(value, q.Value);
     }

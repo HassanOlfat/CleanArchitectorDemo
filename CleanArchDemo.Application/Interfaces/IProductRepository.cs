@@ -4,8 +4,14 @@ namespace CleanArchDemo.Application.Interfaces;
 
 public interface IProductRepository
 {
-    Product GetById(int id);
+    Task<Product?> GetByIdAsync(int id);
+    Task<List<Product>> GetAllAsync();
+    Task AddAsync(Product product);
+    Task UpdateAsync(Product product);
+    Task DeleteAsync(int id);
+
+
     List<Product> GetAll();
-    void Save(Product product);
+
 
 }

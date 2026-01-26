@@ -2,15 +2,9 @@
 
 public record EmailAddress
 {
-    public string Value { get; }
+    public string? Value { set; get; }
 
-    public EmailAddress(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value) || !value.Contains("@"))
-            throw new ArgumentException("Invalid email address");
 
-        Value = value;
-    }
 
-    public override string ToString() => Value;
+    public override string ToString() =>string.IsNullOrEmpty( Value)?string.Empty: Value;
 }

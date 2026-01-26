@@ -47,5 +47,4 @@ Content-Type: application/json
   ]
 }
 
-### گرفتن سفارش با شناسه
-GET {{CleanArchDemo.Presentation_HostAddress}}/api/order/1
+
