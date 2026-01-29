@@ -13,21 +13,22 @@ public class ProductRepository : IProductRepository
         _context = context;
     }
 
-    public List<Product> GetAll()
+    public async Task<List<Product>> GetAllAsync()
     {
-        return _context.Products.ToList();
+        return await _context.Products.ToListAsync();
     }
-
+    public async Task<List<Product>> GetTopRowsAsync(int rowCount)
+    {
+       var val=   _context.Products.Take(rowCount);
+        return await val.ToListAsync();
+    }
     public async Task<Product?> GetByIdAsync(int id)
     {
         return await _context.Products
                              .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public async Task<List<Product>> GetAllAsync()
-    {
-        return await _context.Products.ToListAsync();
-    }
+
 
     public async Task AddAsync(Product product)
     {
@@ -50,4 +51,6 @@ public class ProductRepository : IProductRepository
             await _context.SaveChangesAsync();
         }
     }
+
+ 
 }

@@ -16,11 +16,11 @@ namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
 
 
 
-        public List<Customer> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
-            return _context.Customers
+            return await _context.Customers
                            .Include(c => c.Orders)
-                           .ToList();
+                           .ToListAsync();
         }
 
         public async Task<Customer?> GetByIdAsync(int id)

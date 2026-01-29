@@ -17,18 +17,13 @@ namespace CleanArchDemo.Infrastructure.InMemory
 
         public Task<T?> GetAsync<T>(string key)
         {
-            _cache.TryGetValue(key, out T? value);
+            _cache.TryGetValue(key, out T value);
             return Task.FromResult(value);
         }
 
-        public Task SetAsync<T>(string key, T value, TimeSpan? ttl = null)
+        public Task SetAsync<T>(string key, T value, TimeSpan ttl)
         {
-            var options = new MemoryCacheEntryOptions();
-
-            if (ttl.HasValue)
-                options.SetAbsoluteExpiration(ttl.Value);
-
-            _cache.Set(key, value, options);
+            _cache.Set(key, value, ttl);
             return Task.CompletedTask;
         }
 
@@ -37,6 +32,8 @@ namespace CleanArchDemo.Infrastructure.InMemory
             _cache.Remove(key);
             return Task.CompletedTask;
         }
+
+        
     }
 
 }

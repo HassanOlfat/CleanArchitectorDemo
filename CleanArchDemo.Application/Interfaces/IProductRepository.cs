@@ -11,7 +11,7 @@ public interface IProductRepository
     Task DeleteAsync(int id);
 
 
-    List<Product> GetAll();
 
+    Task<List<Product>> GetTopRowsAsync(int rowCount);
 
 }

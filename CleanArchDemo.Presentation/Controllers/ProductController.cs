@@ -25,14 +25,15 @@ namespace CleanArchDemo.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
         {
+
             var response =await _createProducts.Handle(request);
             return Ok(response);
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var response = _getProducts.Handle();
+            var response = await _getProducts.HandleAsync();
             return Ok(response);
         }
     }

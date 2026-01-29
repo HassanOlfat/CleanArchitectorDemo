@@ -1,11 +1,26 @@
-﻿namespace CleanArchDemo.Application.Dtos;
+﻿using CleanArchDemo.Domain.Entities;
 
-public class CustomerDto
+namespace CleanArchDemo.Application.Dtos;
+
+public record CustomerDto
+(
+     int Id ,
+     string Name ,
+     string? Email ,
+     string? Street,
+     string? City ,
+     string? PostalCode
+)
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Street { get; set; } = string.Empty;
-    public string City { get; set; } = string.Empty;
-    public string PostalCode { get; set; } = string.Empty;
+    public static CustomerDto From(Customer customer)
+     => new(
+         customer.Id,
+         customer.Name,
+         customer.Email.Value,
+         customer.Address.Street,
+         customer.Email.Value,
+         customer.Address.PostalCode
+
+     );
 }
+  

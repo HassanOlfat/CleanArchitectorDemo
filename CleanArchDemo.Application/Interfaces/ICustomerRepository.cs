@@ -10,7 +10,7 @@ namespace CleanArchDemo.Application.Interfaces
         Task UpdateAsync(Customer customer);
         Task DeleteAsync(int id);
 
-        List<Customer> GetAll();
+        Task<List<Customer>> GetAll();
 
 
     }

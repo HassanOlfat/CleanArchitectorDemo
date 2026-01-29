@@ -22,12 +22,12 @@ namespace CleanArchDemo.Infrastructure.Redis
             return data is null ? default : JsonSerializer.Deserialize<T>(data);
         }
 
-        public async Task SetAsync<T>(string key, T value, TimeSpan? ttl = null)
+        public async Task SetAsync<T>(string key, T value, TimeSpan ttl )
         {
             var options = new DistributedCacheEntryOptions();
 
-            if (ttl.HasValue)
-                options.SetAbsoluteExpiration(ttl.Value);
+           
+                options.SetAbsoluteExpiration(ttl);
 
             var json = JsonSerializer.Serialize(value);
             await _cache.SetStringAsync(key, json, options);

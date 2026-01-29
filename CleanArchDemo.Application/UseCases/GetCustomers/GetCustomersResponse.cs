@@ -1,7 +1,9 @@
 ﻿
 
+using CleanArchDemo.Application.Dtos;
+
 namespace CleanArchDemo.Application.UseCases.GetCustomers;
 
-public record GetCustomersResponse(List<(int Id, string Name, string Email, string Address)> Customers);
+public record GetCustomersResponse(List<CustomerDto> Customers);
 
 

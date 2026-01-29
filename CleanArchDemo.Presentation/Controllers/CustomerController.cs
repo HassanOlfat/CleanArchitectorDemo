@@ -28,7 +28,7 @@ public class CustomerController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        var response = _getCustomersResponse.Handle();
+        var response = _getCustomersResponse.HandleAsync();
         return Ok(response);
     }
 }

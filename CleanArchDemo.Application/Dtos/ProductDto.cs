@@ -1,9 +1,20 @@
-﻿namespace CleanArchDemo.Application.Dtos;
+﻿using CleanArchDemo.Domain.Entities;
 
-public class ProductDto
+namespace CleanArchDemo.Application.Dtos;
+
+
+public record ProductDto(
+    int Id,
+    string? Name,
+    decimal Price,
+    string? Currency
+)
 {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public decimal Amount { get; set; }
-    public string? Currency { get; set; }
+    public static ProductDto From(Product product)
+        => new(
+            product.Id,
+            product.Name,
+            product.Price.Amount,
+            product.Price.Currency
+        );
 }

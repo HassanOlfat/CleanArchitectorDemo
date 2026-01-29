@@ -1,31 +1,46 @@
-﻿using CleanArchDemo.Application.Dtos;
+﻿using CleanArchDemo.Application.Configuration;
+using CleanArchDemo.Application.Dtos;
 using CleanArchDemo.Application.Interfaces;
-
+using CleanArchDemo.Application.UseCases.GetProducts;
 
 namespace CleanArchDemo.Application.UseCases.GetCustomers;
 
 public class GetCustomersUseCase
 {
     private readonly ICustomerRepository _customerRepo;
+    private readonly ICacheService _cache;
 
-    public GetCustomersUseCase(ICustomerRepository customerRepo)
+    public GetCustomersUseCase(ICustomerRepository customerRepo, ICacheService cache)
     {
         _customerRepo = customerRepo;
+        _cache = cache;
+
     }
 
-    public List<CustomerDto> Handle()
+    public async Task<GetCustomersResponse> HandleAsync()
     {
-        return _customerRepo.GetAll()
-            .Select(c => new CustomerDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Email = c.Email.Value,
-                Street = c.Address.Street,
-                City = c.Address.City,
-                PostalCode = c.Address.PostalCode
-            })
-            .ToList();
+
+        var cacheKey = CacheKeys.Customers;
+
+        var cached = await _cache.GetAsync<GetCustomersResponse>(cacheKey);
+
+        if (cached != null)
+        {
+            return cached;
+        }
+
+        var customers = await _customerRepo.GetAll();
+        var dto = customers.Select(CustomerDto.From).ToList();
+        var response = new GetCustomersResponse(dto);
+
+        await _cache.SetAsync(
+            cacheKey,
+            response,
+            TimeSpan.FromMinutes(5)
+        );
+        return new GetCustomersResponse(dto);
+
+
     }
 
 }
