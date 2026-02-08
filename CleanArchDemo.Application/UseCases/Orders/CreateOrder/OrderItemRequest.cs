@@ -1,6 +1,6 @@
 ﻿using CleanArchDemo.Application.Dtos;
 
-namespace CleanArchDemo.Application.UseCases.CreateOrder;
+namespace CleanArchDemo.Application.UseCases.Orders.CreateOrder;
 
 
 public class OrderItemRequest

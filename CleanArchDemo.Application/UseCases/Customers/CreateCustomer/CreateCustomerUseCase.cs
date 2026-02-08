@@ -4,7 +4,7 @@ using CleanArchDemo.Domain.Entities;
 using CleanArchDemo.Domain.ValueObjects;
 using System.Threading.Tasks;
 
-namespace CleanArchDemo.Application.UseCases.CreateCustomer;
+namespace CleanArchDemo.Application.UseCases.Customers.CreateCustomer;
 
 public class CreateCustomerUseCase
 {

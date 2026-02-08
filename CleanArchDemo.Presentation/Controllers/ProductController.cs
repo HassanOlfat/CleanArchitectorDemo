@@ -1,6 +1,7 @@
 ﻿using CleanArchDemo.Application.UseCases.CreateCustomer;
-using CleanArchDemo.Application.UseCases.CreateProduct;
-using CleanArchDemo.Application.UseCases.GetProducts;
+using CleanArchDemo.Application.UseCases.Products.CreateProduct;
+using CleanArchDemo.Application.UseCases.Products.GetProducts;
+using CleanArchDemo.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace CleanArchDemo.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
         {
-
+           
             var response =await _createProducts.Handle(request);
             return Ok(response);
         }

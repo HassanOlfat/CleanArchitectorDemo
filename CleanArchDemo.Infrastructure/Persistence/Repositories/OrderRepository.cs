@@ -15,12 +15,16 @@ public class OrderRepository : IOrderRepository
 
 
 
-    public async Task<Order?> GetByIdAsync(int id)
+    public async Task<Order> GetByIdAsync(int id)
     {
-        return await _context.Orders
+        var val= await _context.Orders
                              .Include(o => o.Customer)
                              .Include(o => o.Items)
                              .FirstOrDefaultAsync(o => o.Id == id);
+
+        if (val is null) { throw new Exception("Order not found"); }
+
+        return val;
     }
 
     public async Task<List<Order>> GetAllAsync()

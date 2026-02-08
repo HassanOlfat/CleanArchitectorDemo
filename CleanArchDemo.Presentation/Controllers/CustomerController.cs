@@ -1,6 +1,7 @@
-﻿using CleanArchDemo.Application.UseCases.CreateCustomer;
-using CleanArchDemo.Application.UseCases.GetCustomers;
+﻿using CleanArchDemo.Application.UseCases.Customers.CreateCustomer;
+using CleanArchDemo.Application.UseCases.Customers.GetCustomers;
 using CleanArchDemo.Application.UseCases.GetProducts;
+using CleanArchDemo.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchDemo.Presentation.Controllers;
@@ -22,13 +23,14 @@ public class CustomerController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateCustomerRequest request)
     {
+       
         var response = await _createCustomer.Handle(request);
         return Ok(response);
     }
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var response = _getCustomersResponse.HandleAsync();
+        var response =await _getCustomersResponse.HandleAsync();
         return Ok(response);
     }
 }

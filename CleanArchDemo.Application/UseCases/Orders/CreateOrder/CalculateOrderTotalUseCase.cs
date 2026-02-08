@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchDemo.Application.UseCases.CreateOrder
+namespace CleanArchDemo.Application.UseCases.Orders.CreateOrder
 {
     public class CalculateOrderTotalUseCase
     {

@@ -5,7 +5,7 @@ using CleanArchDemo.Domain.ValueObjects;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CleanArchDemo.Application.UseCases.CreateOrder;
+namespace CleanArchDemo.Application.UseCases.Orders.CreateOrder;
 
 public class CreateOrderUseCase
 {

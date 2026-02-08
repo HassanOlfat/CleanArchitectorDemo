@@ -22,10 +22,13 @@ public class ProductRepository : IProductRepository
        var val=   _context.Products.Take(rowCount);
         return await val.ToListAsync();
     }
-    public async Task<Product?> GetByIdAsync(int id)
+    public async Task<Product> GetByIdAsync(int id)
     {
-        return await _context.Products
+        var val= await _context.Products
                              .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (val is null) { throw new Exception("Product not found"); }
+        return val;
     }
 
 

@@ -2,7 +2,7 @@
 using CleanArchDemo.Application.Dtos;
 using CleanArchDemo.Application.Interfaces;
 
-namespace CleanArchDemo.Application.UseCases.GetProducts;
+namespace CleanArchDemo.Application.UseCases.Products.GetProducts;
 
 public class GetProductsUseCase
 {

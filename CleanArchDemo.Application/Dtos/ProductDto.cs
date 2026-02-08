@@ -1,4 +1,5 @@
 ﻿using CleanArchDemo.Domain.Entities;
+using CleanArchDemo.Domain.Enums;
 
 namespace CleanArchDemo.Application.Dtos;
 
@@ -7,7 +8,7 @@ public record ProductDto(
     int Id,
     string? Name,
     decimal Price,
-    string? Currency
+    eMoney? Currency
 )
 {
     public static ProductDto From(Product product)

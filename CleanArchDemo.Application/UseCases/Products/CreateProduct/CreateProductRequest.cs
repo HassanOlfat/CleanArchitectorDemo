@@ -1,6 +1,6 @@
 ﻿using CleanArchDemo.Application.Dtos;
 
-namespace CleanArchDemo.Application.UseCases.CreateProduct;
+namespace CleanArchDemo.Application.UseCases.Products.CreateProduct;
 
 public class CreateProductRequest
 {

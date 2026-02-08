@@ -3,7 +3,7 @@ using CleanArchDemo.Application.Dtos;
 using CleanArchDemo.Application.Interfaces;
 using CleanArchDemo.Application.UseCases.GetProducts;
 
-namespace CleanArchDemo.Application.UseCases.GetCustomers;
+namespace CleanArchDemo.Application.UseCases.Customers.GetCustomers;
 
 public class GetCustomersUseCase
 {

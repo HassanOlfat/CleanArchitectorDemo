@@ -17,13 +17,33 @@ namespace CleanArchDemo.Infrastructure.Persistence.Configurations
                    .IsRequired()
                    .HasMaxLength(100);
 
-            builder.Property(p => p.Email)
-                 .IsRequired()
-                 .HasMaxLength(100);
+            builder.OwnsOne(p => p.Email, c =>
+            {
+                c.Property(x => x.Value)
+                 .HasConversion<string>()
+                 .HasMaxLength(100)
+                 .IsRequired();
+            });
 
-            builder.Property(p => p.Address)
-                .IsRequired()
-                .HasMaxLength(500);
+            builder.OwnsOne(p => p.Address, c =>
+            {
+              
+                c.Property(x => x.Street)
+                 .HasConversion<string>()
+                 .HasMaxLength(50)
+                 .IsRequired();
+
+                c.Property(x => x.City)
+                .HasConversion<string>()
+                .HasMaxLength(50)
+                .IsRequired();
+
+                c.Property(x => x.PostalCode)
+                .HasConversion<string>()
+                .HasMaxLength(10)
+                .IsRequired();
+            });
+
 
 
             builder.ToTable("Customers");

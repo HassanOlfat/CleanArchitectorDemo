@@ -1,4 +1,5 @@
 ﻿using CleanArchDemo.Domain.Entities;
+using CleanArchDemo.Domain.Enums;
 using CleanArchDemo.Domain.ValueObjects;
 
 namespace CleanArchDemo.Domain.Aggregates;
@@ -19,16 +20,12 @@ public class Order
 
     public void AddItem(Product product, Quantity quantity)
     {
-        var item = new OrderItem();
-
-        item.Product = product;
-        item.Quantity = quantity;
-        _items.Add(item);
+        _items.Add(new OrderItem() { Product = product, Quantity = quantity });
     }
 
     public Money GetTotal()
     {
-        if (!_items.Any()) return new Money(0, "USD");
+        if (!_items.Any()) return new Money(0, eMoney.IRR);
 
         Money price = _items.First().Product.Price;
         var currency = GetCurrency(price);
@@ -36,7 +33,7 @@ public class Order
 
         return new Money(total, currency);
 
-        static string? GetCurrency(Money price)
+        static eMoney GetCurrency(Money price)
         {
             if (price is null)
                 throw new ArgumentNullException(nameof(price));

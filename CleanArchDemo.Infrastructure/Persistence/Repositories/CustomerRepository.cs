@@ -23,11 +23,13 @@ namespace CleanArchDemo.Infrastructure.Persistence.Repositories;
                            .ToListAsync();
         }
 
-        public async Task<Customer?> GetByIdAsync(int id)
+        public async Task<Customer> GetByIdAsync(int id)
         {
-            return await _context.Customers
+            var val= await _context.Customers
                                  .Include(c => c.Orders)
                                  .FirstOrDefaultAsync(c => c.Id == id);
+        if( val is null) {throw new Exception("Customer not found"); }
+        return val;
         }
 
         public async Task<List<Customer>> GetAllAsync()

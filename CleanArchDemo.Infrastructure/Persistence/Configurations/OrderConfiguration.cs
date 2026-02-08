@@ -13,15 +13,16 @@ namespace CleanArchDemo.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(o => o.Id);
 
+
             builder.HasOne(o => o.Customer)
                    .WithMany(i=>i.Orders)               
                    .HasForeignKey("CustomerId")
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(o => o.Items)
-                   .WithOne(i => i.Order)
-                   .HasForeignKey("OrderItemsId")
-                   .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(o => o.Items)
+            //       .WithOne(i => i.Order)
+            //       .HasForeignKey("OrderItemsId")
+            //       .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Orders");
 

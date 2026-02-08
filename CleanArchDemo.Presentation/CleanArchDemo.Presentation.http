@@ -30,7 +30,7 @@ Content-Type: application/json
   "name": "Oil",
   "price": {
     "amount": 1000,
-    "currency": "ريال"
+    "currency": 0
   }
 }
 
@@ -42,8 +42,8 @@ Content-Type: application/json
 {
   "customerId": 1,
   "items": [
-    { "productId": 1, "quantity": 2 },
-    { "productId": 2, "quantity": 1 }
+    { "productId": 500, "quantity": 1 },
+    { "productId": 601, "quantity": 1 }
   ]
 }
 

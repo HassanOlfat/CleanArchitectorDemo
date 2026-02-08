@@ -1,9 +1,9 @@
-﻿using CleanArchDemo.Application.UseCases.CreateCustomer;
-using CleanArchDemo.Application.UseCases.CreateOrder;
-using CleanArchDemo.Application.UseCases.CreateProduct;
-using CleanArchDemo.Application.UseCases.GetCustomers;
-using CleanArchDemo.Application.UseCases.GetOrderById;
-using CleanArchDemo.Application.UseCases.GetProducts;
+﻿using CleanArchDemo.Application.UseCases.Customers.CreateCustomer;
+using CleanArchDemo.Application.UseCases.Customers.GetCustomers;
+using CleanArchDemo.Application.UseCases.Orders.CreateOrder;
+using CleanArchDemo.Application.UseCases.Orders.GetOrderById;
+using CleanArchDemo.Application.UseCases.Products.CreateProduct;
+using CleanArchDemo.Application.UseCases.Products.GetProducts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchDemo.Application.Configuration;

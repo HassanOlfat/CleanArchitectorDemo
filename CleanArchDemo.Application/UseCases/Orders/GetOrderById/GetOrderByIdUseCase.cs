@@ -1,7 +1,7 @@
 ﻿using CleanArchDemo.Application.Interfaces;
 using System.Threading.Tasks;
 
-namespace CleanArchDemo.Application.UseCases.GetOrderById;
+namespace CleanArchDemo.Application.UseCases.Orders.GetOrderById;
 
 public class GetOrderByIdUseCase
 {

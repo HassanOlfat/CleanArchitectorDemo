@@ -1,5 +1,6 @@
-﻿using CleanArchDemo.Application.UseCases.CreateOrder;
+﻿using CleanArchDemo.Application.UseCases.Orders.CreateOrder;
 using CleanArchDemo.Domain.Entities;
+using CleanArchDemo.Domain.Enums;
 using CleanArchDemo.Domain.ValueObjects;
 using CleanArchDemo.Infrastructure.Persistence;
 using CleanArchDemo.Infrastructure.Persistence.Repositories;
@@ -36,7 +37,7 @@ public class CreateOrderUseCaseTests
         };
         await customerRepo.AddAsync(customer);
 
-        var product = new Product { Id = 1, Name = "Oil", Price = new Money(1000, "IRR") };
+        var product = new Product { Id = 1, Name = "Oil", Price = new Money(1000, eMoney.IRR) };
         await productRepo.AddAsync(product);
 
         var request = new CreateOrderRequest
@@ -55,7 +56,7 @@ public class CreateOrderUseCaseTests
 
         // Assert
         Assert.Equal(2000, response.TotalAmount);
-        Assert.Equal("IRR", response.Currency);
+        Assert.Equal(eMoney.IRR, response.Currency);
     }
 
 }

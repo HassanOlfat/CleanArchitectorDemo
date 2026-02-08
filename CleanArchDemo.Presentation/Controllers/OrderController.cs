@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CleanArchDemo.Application.UseCases.CreateOrder;
-using CleanArchDemo.Application.UseCases.GetOrderById;
+﻿using CleanArchDemo.Application.UseCases.Orders.CreateOrder;
+using CleanArchDemo.Application.UseCases.Orders.GetOrderById;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchDemo.Presentation.Controllers;
 
@@ -28,6 +28,11 @@ public class OrderController : ControllerBase
     public IActionResult GetById(int id)
     {
         var response = _getOrder.Handle(new GetOrderByIdRequest(id));
+        return Ok(response);
+    }
+    public async Task<IActionResult> GetAll()
+    {
+        var response = await _getOrder.HandleAsync();
         return Ok(response);
     }
 }

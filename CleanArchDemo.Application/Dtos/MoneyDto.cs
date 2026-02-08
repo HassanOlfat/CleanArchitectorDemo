@@ -1,7 +1,9 @@
-﻿namespace CleanArchDemo.Application.Dtos;
+﻿using CleanArchDemo.Domain.Enums;
+
+namespace CleanArchDemo.Application.Dtos;
 
 public class MoneyDto
 {
     public decimal Amount { get; set; }
-    public string? Currency { get; set; }
+    public eMoney Currency { get; set; }
 }

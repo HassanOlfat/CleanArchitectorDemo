@@ -17,7 +17,8 @@ namespace CleanArchDemo.Infrastructure.Persistence.Configurations
 
             builder.HasOne<Order>() 
                    .WithMany(o => o.Items)
-                   .HasForeignKey("OrderId");
+                   .HasForeignKey("OrderId")
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.OwnsOne(oi => oi.Quantity, q =>
             {
@@ -25,6 +26,7 @@ namespace CleanArchDemo.Infrastructure.Persistence.Configurations
                  .HasColumnName("Quantity")
                  .IsRequired();
             });
+
 
             builder.ToTable("OrderItems");
         }
