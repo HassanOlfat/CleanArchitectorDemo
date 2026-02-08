@@ -3,10 +3,10 @@
 ### تست ساده
 GET {{CleanArchDemo.Presentation_HostAddress}}/api/test
 
-### گرفتن مشتری محصولات
+### Get customers
 GET {{CleanArchDemo.Presentation_HostAddress}}/api/customer
 
-### ایجاد مشتری جدید
+### insert new customer
 POST {{CleanArchDemo.Presentation_HostAddress}}/api/customer
 Content-Type: application/json
 
@@ -19,10 +19,10 @@ Content-Type: application/json
 }
 
 
-### گرفتن لیست محصولات
+### Get products
 GET {{CleanArchDemo.Presentation_HostAddress}}/api/product
 
-### ثبت محصولات جدید
+### insert new product
 POST {{CleanArchDemo.Presentation_HostAddress}}/api/product
 Content-Type: application/json
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 
-### ثبت سفارش جدید
+### insert new order
 POST {{CleanArchDemo.Presentation_HostAddress}}/api/order
 Content-Type: application/json
 
@@ -46,5 +46,5 @@ Content-Type: application/json
     { "productId": 601, "quantity": 1 }
   ]
 }
-
-
+### Get Orders
+GET {{CleanArchDemo.Presentation_HostAddress}}/api/order

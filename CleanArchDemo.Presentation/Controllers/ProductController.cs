@@ -1,4 +1,4 @@
-﻿using CleanArchDemo.Application.UseCases.CreateCustomer;
+﻿using CleanArchDemo.Application.UseCases.Orders.GetOrders;
 using CleanArchDemo.Application.UseCases.Products.CreateProduct;
 using CleanArchDemo.Application.UseCases.Products.GetProducts;
 using CleanArchDemo.Domain.Enums;
@@ -11,11 +11,11 @@ namespace CleanArchDemo.Presentation.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly GetProductsUseCase _getProducts;
+        private readonly GetOrdersUseCase _getProducts;
         private readonly CreateProductUseCase _createProducts;
 
         public ProductController(
-       GetProductsUseCase getProducts,
+       GetOrdersUseCase getProducts,
             CreateProductUseCase createProducts
         )
         {

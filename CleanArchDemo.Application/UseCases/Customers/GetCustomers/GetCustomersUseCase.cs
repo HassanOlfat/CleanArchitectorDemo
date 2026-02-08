@@ -1,7 +1,6 @@
 ﻿using CleanArchDemo.Application.Configuration;
 using CleanArchDemo.Application.Dtos;
 using CleanArchDemo.Application.Interfaces;
-using CleanArchDemo.Application.UseCases.GetProducts;
 
 namespace CleanArchDemo.Application.UseCases.Customers.GetCustomers;
 

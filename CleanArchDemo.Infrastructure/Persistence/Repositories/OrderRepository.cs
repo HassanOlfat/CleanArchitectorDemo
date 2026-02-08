@@ -14,12 +14,22 @@ public class OrderRepository : IOrderRepository
     }
 
 
-
+    public async Task<List<Order>> GetTopRowsAsync(int rowCount)
+    {
+        var val = _context.Orders
+                             .Include(o => o.Customer)
+                             .Include(o => o.Items)  
+                             .ThenInclude(o=>o.Product)
+                             .Take(rowCount)
+                             .AsNoTracking();
+        return await val.ToListAsync();
+    }
     public async Task<Order> GetByIdAsync(int id)
     {
         var val= await _context.Orders
                              .Include(o => o.Customer)
                              .Include(o => o.Items)
+
                              .FirstOrDefaultAsync(o => o.Id == id);
 
         if (val is null) { throw new Exception("Order not found"); }

@@ -1,7 +1,6 @@
 ﻿using CleanArchDemo.Application.UseCases.Customers.CreateCustomer;
 using CleanArchDemo.Application.UseCases.Customers.GetCustomers;
-using CleanArchDemo.Application.UseCases.GetProducts;
-using CleanArchDemo.Domain.Entities;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchDemo.Presentation.Controllers;
