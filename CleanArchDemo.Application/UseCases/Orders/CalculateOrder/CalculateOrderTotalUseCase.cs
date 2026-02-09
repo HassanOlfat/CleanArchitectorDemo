@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchDemo.Application.UseCases.Orders.CreateOrder
+namespace CleanArchDemo.Application.UseCases.Orders.CalculateOrder
 {
     public class CalculateOrderTotalUseCase
     {
@@ -19,9 +19,9 @@ namespace CleanArchDemo.Application.UseCases.Orders.CreateOrder
             _orderRepo = orderRepo;
         }
 
-        public async Task<Money> Handle(int orderId)
+        public async Task<Money> Handle(int orderId, CancellationToken cancellationToken)
         {
-            var order = await _orderRepo.GetByIdAsync(orderId);
+            var order = await _orderRepo.GetByIdAsync(orderId, cancellationToken);
             if (order is null)
                 throw new ArgumentNullException(nameof(order));
 

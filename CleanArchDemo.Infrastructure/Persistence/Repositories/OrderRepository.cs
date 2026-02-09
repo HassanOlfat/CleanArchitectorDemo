@@ -14,7 +14,7 @@ public class OrderRepository : IOrderRepository
     }
 
 
-    public async Task<List<Order>> GetTopRowsAsync(int rowCount)
+    public async Task<List<Order>> GetTopRowsAsync(int rowCount, CancellationToken cancellationToken)
     {
         var val = _context.Orders
                              .Include(o => o.Customer)
@@ -22,48 +22,47 @@ public class OrderRepository : IOrderRepository
                              .ThenInclude(o=>o.Product)
                              .Take(rowCount)
                              .AsNoTracking();
-        return await val.ToListAsync();
+        return await val.ToListAsync(cancellationToken);
     }
-    public async Task<Order> GetByIdAsync(int id)
+    public async Task<Order> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var val= await _context.Orders
                              .Include(o => o.Customer)
                              .Include(o => o.Items)
-
-                             .FirstOrDefaultAsync(o => o.Id == id);
+                             .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 
         if (val is null) { throw new Exception("Order not found"); }
 
         return val;
     }
 
-    public async Task<List<Order>> GetAllAsync()
+    public async Task<List<Order>> GetAllAsync( CancellationToken cancellationToken)
     {
         return await _context.Orders
                              .Include(o => o.Customer)
                              .Include(o => o.Items)
-                             .ToListAsync();
+                             .ToListAsync(cancellationToken);
     }
 
-    public async Task AddAsync(Order order)
+    public async Task AddAsync(Order order, CancellationToken cancellationToken)
     {
         await _context.Orders.AddAsync(order);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Order order)
+    public async Task UpdateAsync(Order order, CancellationToken cancellationToken)
     {
         _context.Orders.Update(order);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
     {
         var order = await _context.Orders.FindAsync(id);
         if (order != null)
         {
             _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

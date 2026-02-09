@@ -15,7 +15,7 @@ public class CreateProductUseCase
         _productRepo = productRepo;
     }
 
-    public async Task<CreateProductResponse> Handle(CreateProductRequest request)
+    public async Task<CreateProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
         var product = new Product
         {
@@ -23,7 +23,7 @@ public class CreateProductUseCase
            Price=new Money(request.Price.Amount, request.Price.Currency)
         };
 
-       await _productRepo.AddAsync(product);
+       await _productRepo.AddAsync(product, cancellationToken);
 
         return new CreateProductResponse(product.Id);
     }

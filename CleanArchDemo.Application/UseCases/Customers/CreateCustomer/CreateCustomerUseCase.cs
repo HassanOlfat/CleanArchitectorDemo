@@ -15,7 +15,7 @@ public class CreateCustomerUseCase
         _customerRepo = customerRepo;
     }
 
-    public async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
+    public async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request,CancellationToken cancellationToken)
     {
         var customer = new Customer
         {
@@ -30,7 +30,7 @@ public class CreateCustomerUseCase
             }
         };
 
-       await _customerRepo.AddAsync(customer);
+       await _customerRepo.AddAsync(customer, cancellationToken);
 
         return new CreateCustomerResponse(customer.Id);
     }

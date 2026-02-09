@@ -24,17 +24,17 @@ namespace CleanArchDemo.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
         {
            
-            var response =await _createProducts.Handle(request);
+            var response =await _createProducts.Handle(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var response = await _getProducts.HandleAsync();
+            var response = await _getProducts.HandleAsync(cancellationToken);
             return Ok(response);
         }
     }

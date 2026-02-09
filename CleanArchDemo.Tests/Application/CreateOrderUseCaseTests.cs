@@ -14,49 +14,44 @@ public class CreateOrderUseCaseTests
     [Fact]
     public async Task Should_Create_Order_With_Valid_Customer_And_Products()
     {
-        // Arrange
         var options = new DbContextOptionsBuilder<AppDbContext>()
-           .UseInMemoryDatabase(databaseName: "TestDb")
-           
-           .Options;
-        var context = new AppDbContext(options);
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
 
+        var context = new AppDbContext(options);
+        var cancellationToken = CancellationToken.None;
 
         var customerRepo = new CustomerRepository(context);
         var productRepo = new ProductRepository(context);
         var orderRepo = new OrderRepository(context);
 
-        var customer = new Customer()
+        var customer = new Customer
         {
             Name = "Hassan",
-            Email = new EmailAddress() { Value= "hassan.olfat@outlook.com" },
-            Address = new Address()
-            {
-               Street= "Street",City= "City",PostalCode= "00000"
-            }
+            Email = new EmailAddress { Value = "hassan.olfat@outlook.com" },
+            Address = new Address { Street = "Street", City = "City", PostalCode = "00000" }
         };
-        await customerRepo.AddAsync(customer);
+        await customerRepo.AddAsync(customer, cancellationToken);
 
-        var product = new Product { Id = 1, Name = "Oil", Price = new Money(1000, eMoney.IRR) };
-        await productRepo.AddAsync(product);
+        var product = new Product { Name = "Oil", Price = new Money(1000, eMoney.IRR) };
+        await productRepo.AddAsync(product, cancellationToken);
 
         var request = new CreateOrderRequest
         {
-            CustomerId = 1,
+            CustomerId = customer.Id,
             Items = new List<OrderItemRequest>
         {
-            new OrderItemRequest { ProductId = 1, Quantity = 2 }
+            new OrderItemRequest { ProductId = product.Id, Quantity = 2 }
         }
         };
 
         var useCase = new CreateOrderUseCase(customerRepo, productRepo, orderRepo);
 
-        // Act
-        var response =await useCase.Handle(request);
+        var response = await useCase.Handle(request, cancellationToken);
 
-        // Assert
         Assert.Equal(2000, response.TotalAmount);
         Assert.Equal(eMoney.IRR, response.Currency);
     }
+
 
 }

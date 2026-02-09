@@ -4,13 +4,13 @@ namespace CleanArchDemo.Application.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task<Customer> GetByIdAsync(int id);
-        Task<List<Customer>> GetAllAsync();
-        Task AddAsync(Customer customer);
-        Task UpdateAsync(Customer customer);
-        Task DeleteAsync(int id);
+        Task<Customer> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<List<Customer>> GetAllAsync(CancellationToken cancellationToken);
+        Task AddAsync(Customer customer, CancellationToken cancellationToken);
+        Task UpdateAsync(Customer customer, CancellationToken cancellationToken);
+        Task DeleteAsync(int id, CancellationToken cancellationToken);
 
-        Task<List<Customer>> GetAll();
+        Task<List<Customer>> GetAll(CancellationToken cancellationToken);
 
 
     }

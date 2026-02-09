@@ -15,11 +15,11 @@ public class GetOrdersUseCase
         _cache = cache;
     }
 
-    public async Task<GetOrdersResponse> HandleAsync()
+    public async Task<GetOrdersResponse> HandleAsync(CancellationToken cancellationToken)
     {
         var cacheKey = CacheKeys.Orders;
 
-        var cached = await _cache.GetAsync<GetOrdersResponse>(cacheKey);
+        var cached = await _cache.GetAsync<GetOrdersResponse>(cacheKey, cancellationToken);
 
         if (cached != null)
         {
@@ -27,14 +27,15 @@ public class GetOrdersUseCase
         }
 
 
-        var orders = await _orderRepo.GetTopRowsAsync(1000);
+        var orders = await _orderRepo.GetTopRowsAsync(1000, cancellationToken);
         var dto = orders.Select(OrderDto.From).ToList();
         var response = new GetOrdersResponse(dto);
 
         await _cache.SetAsync(
             cacheKey,
             response,
-            TimeSpan.FromMinutes(5)
+            TimeSpan.FromMinutes(5),
+            cancellationToken
         );
 
         return new GetOrdersResponse(dto);

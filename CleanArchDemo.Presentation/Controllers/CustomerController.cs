@@ -20,16 +20,16 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateCustomerRequest request)
+    public async Task<IActionResult> CreateAsync([FromBody] CreateCustomerRequest request, CancellationToken cancellationToken)
     {
        
-        var response = await _createCustomer.Handle(request);
+        var response = await _createCustomer.Handle(request, cancellationToken);
         return Ok(response);
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll( CancellationToken cancellationToken)
     {
-        var response =await _getCustomersResponse.HandleAsync();
+        var response =await _getCustomersResponse.HandleAsync(cancellationToken);
         return Ok(response);
     }
 }

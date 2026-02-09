@@ -16,26 +16,27 @@ public class GetCustomersUseCase
 
     }
 
-    public async Task<GetCustomersResponse> HandleAsync()
+    public async Task<GetCustomersResponse> HandleAsync(CancellationToken cancellationToken)
     {
 
         var cacheKey = CacheKeys.Customers;
 
-        var cached = await _cache.GetAsync<GetCustomersResponse>(cacheKey);
+        var cached = await _cache.GetAsync<GetCustomersResponse>(cacheKey, cancellationToken);
 
         if (cached != null)
         {
             return cached;
         }
 
-        var customers = await _customerRepo.GetAll();
+        var customers = await _customerRepo.GetAll(cancellationToken);
         var dto = customers.Select(CustomerDto.From).ToList();
         var response = new GetCustomersResponse(dto);
 
         await _cache.SetAsync(
             cacheKey,
             response,
-            TimeSpan.FromMinutes(5)
+            TimeSpan.FromMinutes(5),
+            cancellationToken
         );
         return new GetCustomersResponse(dto);
 

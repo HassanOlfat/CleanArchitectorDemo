@@ -16,13 +16,13 @@ namespace CleanArchDemo.Infrastructure.Redis
             _cache = cache;
         }
 
-        public async Task<T?> GetAsync<T>(string key)
+        public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken)
         {
-            var data = await _cache.GetStringAsync(key);
+            var data = await _cache.GetStringAsync(key, cancellationToken);
             return data is null ? default : JsonSerializer.Deserialize<T>(data);
         }
 
-        public async Task SetAsync<T>(string key, T value, TimeSpan ttl )
+        public async Task SetAsync<T>(string key, T value, TimeSpan ttl, CancellationToken cancellationToken)
         {
             var options = new DistributedCacheEntryOptions();
 
@@ -30,11 +30,11 @@ namespace CleanArchDemo.Infrastructure.Redis
                 options.SetAbsoluteExpiration(ttl);
 
             var json = JsonSerializer.Serialize(value);
-            await _cache.SetStringAsync(key, json, options);
+            await _cache.SetStringAsync(key, json, options, cancellationToken);
         }
 
-        public Task RemoveAsync(string key)
-            => _cache.RemoveAsync(key);
+        public Task RemoveAsync(string key, CancellationToken cancellationToken)
+            => _cache.RemoveAsync(key, cancellationToken);
     }
 
 }

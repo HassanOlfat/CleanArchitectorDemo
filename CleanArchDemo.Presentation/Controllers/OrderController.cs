@@ -20,22 +20,23 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
+    public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
     {
-        var response = await _createOrder.Handle(request);
+
+        var response = await _createOrder.Handle(request, cancellationToken);
         return Ok(response);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public IActionResult GetById(int id, CancellationToken cancellationToken)
     {
-        var response = _getOrderById.Handle(new GetOrderByIdRequest(id));
+        var response = _getOrderById.Handle(new GetOrderByIdRequest(id), cancellationToken);
         return Ok(response);
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var response = await _getOrder.HandleAsync();
+        var response = await _getOrder.HandleAsync(cancellationToken);
         return Ok(response);
     }
 }

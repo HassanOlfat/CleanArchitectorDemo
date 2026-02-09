@@ -15,19 +15,19 @@ namespace CleanArchDemo.Infrastructure.InMemory
             _cache = cache;
         }
 
-        public Task<T?> GetAsync<T>(string key)
+        public Task<T?> GetAsync<T>(string key, CancellationToken cancellationToke)
         {
             _cache.TryGetValue(key, out T value);
             return Task.FromResult(value);
         }
 
-        public Task SetAsync<T>(string key, T value, TimeSpan ttl)
+        public Task SetAsync<T>(string key, T value, TimeSpan ttl, CancellationToken cancellationToken)
         {
             _cache.Set(key, value, ttl);
             return Task.CompletedTask;
         }
 
-        public Task RemoveAsync(string key)
+        public Task RemoveAsync(string key, CancellationToken cancellationToken)
         {
             _cache.Remove(key);
             return Task.CompletedTask;

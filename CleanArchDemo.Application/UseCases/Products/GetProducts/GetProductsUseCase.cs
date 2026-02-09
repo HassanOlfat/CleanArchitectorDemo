@@ -15,11 +15,11 @@ public class GetProductsUseCase
         _cache = cache;
     }
 
-    public async Task<GetProductsResponse> HandleAsync()
+    public async Task<GetProductsResponse> HandleAsync(CancellationToken cancellationToken)
     {
         var cacheKey = CacheKeys.Products;
 
-        var cached = await _cache.GetAsync<GetProductsResponse>(cacheKey);
+        var cached = await _cache.GetAsync<GetProductsResponse>(cacheKey, cancellationToken);
 
         if (cached != null)
         {
@@ -27,14 +27,15 @@ public class GetProductsUseCase
         }
 
 
-        var products = await _productRepo.GetTopRowsAsync(1000);
+        var products = await _productRepo.GetTopRowsAsync(1000, cancellationToken);
         var dto = products.Select(ProductDto.From).ToList();
         var response = new GetProductsResponse(dto);
 
         await _cache.SetAsync(
             cacheKey,
             response,
-            TimeSpan.FromMinutes(5)
+            TimeSpan.FromMinutes(5),
+            cancellationToken
         );
 
         return new GetProductsResponse(dto);

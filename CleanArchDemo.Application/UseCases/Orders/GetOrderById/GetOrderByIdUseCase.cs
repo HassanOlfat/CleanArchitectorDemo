@@ -12,9 +12,9 @@ public class GetOrderByIdUseCase
         _orderRepo = orderRepo;
     }
 
-    public async Task<GetOrderByIdResponse> Handle(GetOrderByIdRequest request)
+    public async Task<GetOrderByIdResponse> Handle(GetOrderByIdRequest request, CancellationToken cancellationToken)
     {
-        var order =await _orderRepo.GetByIdAsync(request.OrderId);
+        var order =await _orderRepo.GetByIdAsync(request.OrderId, cancellationToken);
         var total = order.GetTotal();
 
         return new GetOrderByIdResponse(order.Id, order.Customer.Name, total.Amount, total.Currency);
